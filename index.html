@@ -51,18 +51,47 @@
             gap: 15px;
         }
 
-        select, button {
+        select, button, input {
             background-color: #000;
             color: #0f0;
             border: 1px solid #0f0;
             padding: 8px 12px;
             font-size: 14px;
-            cursor: pointer;
             outline: none;
+        }
+
+        select, button {
+            cursor: pointer;
         }
 
         select:hover, button:hover {
             background-color: rgba(0, 255, 0, 0.1);
+        }
+
+        .target-inputs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .input-group {
+            display: none;
+            flex: 1;
+        }
+
+        .input-group.active {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-group label {
+            min-width: 100px;
+        }
+
+        .input-group input {
+            flex: 1;
         }
 
         .terminal {
@@ -203,6 +232,44 @@
             </div>
         </header>
 
+        <div class="target-inputs" id="target-inputs">
+            <!-- Instagram Input -->
+            <div class="input-group" id="instagram-input">
+                <label for="instagram-username">Username:</label>
+                <input type="text" id="instagram-username" placeholder="Enter Instagram username">
+            </div>
+            
+            <!-- WhatsApp Input -->
+            <div class="input-group" id="whatsapp-input">
+                <label for="whatsapp-number">Phone Number:</label>
+                <input type="text" id="whatsapp-number" placeholder="Enter WhatsApp number">
+            </div>
+            
+            <!-- Facebook Input -->
+            <div class="input-group" id="facebook-input">
+                <label for="facebook-profile">Profile URL:</label>
+                <input type="text" id="facebook-profile" placeholder="Enter Facebook profile URL">
+            </div>
+            
+            <!-- Snapchat Input -->
+            <div class="input-group" id="snapchat-input">
+                <label for="snapchat-username">Username:</label>
+                <input type="text" id="snapchat-username" placeholder="Enter Snapchat username">
+            </div>
+            
+            <!-- Twitter Input -->
+            <div class="input-group" id="twitter-input">
+                <label for="twitter-handle">Handle:</label>
+                <input type="text" id="twitter-handle" placeholder="Enter Twitter handle">
+            </div>
+            
+            <!-- Gmail Input -->
+            <div class="input-group" id="gmail-input">
+                <label for="gmail-address">Email:</label>
+                <input type="text" id="gmail-address" placeholder="Enter Gmail address">
+            </div>
+        </div>
+
         <div class="terminal">
             <div class="terminal-content" id="terminal-content">
                 <div class="command-line">
@@ -218,7 +285,7 @@
         <button class="download-btn" id="download-btn">Download Data</button>
 
         <footer>
-            &copy; 
+            &copy; 2023 hackPulse 
         </footer>
     </div>
 
@@ -231,6 +298,17 @@
         const statusMessage = document.getElementById('status-message');
         const successMessage = document.getElementById('success-message');
         const downloadBtn = document.getElementById('download-btn');
+        const targetInputs = document.getElementById('target-inputs');
+
+        // Input fields for each platform
+        const inputGroups = {
+            instagram: document.getElementById('instagram-input'),
+            whatsapp: document.getElementById('whatsapp-input'),
+            facebook: document.getElementById('facebook-input'),
+            snapchat: document.getElementById('snapchat-input'),
+            twitter: document.getElementById('twitter-input'),
+            gmail: document.getElementById('gmail-input')
+        };
 
         // Sound effects (optional)
         const keyboardSound = new Audio();
@@ -282,8 +360,31 @@
                 "Accessing DM database...",
                 "Bypassing verification protocols...",
                 "Twitter breach: SUCCESS"
+            ],
+            gmail: [
+                "Connecting to Gmail SMTP servers...",
+                "Bypassing Google security protocols...",
+                "Extracting email database...",
+                "Accessing contact list...",
+                "Bypassing 2FA authentication...",
+                "Gmail breach: SUCCESS"
             ]
         };
+
+        // Show/hide input fields based on selected platform
+        targetPlatform.addEventListener('change', () => {
+            const platform = targetPlatform.value;
+            
+            // Hide all input groups
+            Object.values(inputGroups).forEach(group => {
+                group.classList.remove('active');
+            });
+            
+            // Show selected platform input
+            if (platform && inputGroups[platform]) {
+                inputGroups[platform].classList.add('active');
+            }
+        });
 
         // Typing effect function
         function typeText(element, text, speed = 50) {
@@ -361,6 +462,24 @@
             });
         }
 
+        // Get target input value
+        function getTargetValue(platform) {
+            const inputMap = {
+                instagram: 'instagram-username',
+                whatsapp: 'whatsapp-number',
+                facebook: 'facebook-profile',
+                snapchat: 'snapchat-username',
+                twitter: 'twitter-handle',
+                gmail: 'gmail-address'
+            };
+            
+            if (inputMap[platform]) {
+                return document.getElementById(inputMap[platform]).value;
+            }
+            
+            return '';
+        }
+
         // Simulate hacking process
         async function simulateHacking(platform) {
             if (!hackingSequences[platform]) {
@@ -368,13 +487,29 @@
                 return;
             }
             
+            const targetValue = getTargetValue(platform);
+            if (!targetValue) {
+                alert(`Please enter a target ${platform} identifier`);
+                return;
+            }
+            
             startHackBtn.disabled = true;
             targetPlatform.disabled = true;
             resetHackBtn.disabled = true;
             
+            // Disable all input fields
+            Object.values(inputGroups).forEach(group => {
+                const input = group.querySelector('input');
+                if (input) input.disabled = true;
+            });
+            
             // Initial command
             const { commandSpan } = createCommandLine();
-            await typeText(commandSpan, `hack.initialize("${platform}")`);
+            await typeText(commandSpan, `hack.initialize("${platform}", "${targetValue}")`);
+            
+            // Add target-specific output
+            const targetOutput = createOutputLine();
+            await typeText(targetOutput, `Target identified: ${targetValue} on ${platform.charAt(0).toUpperCase() + platform.slice(1)}`);
             
             // Process each command in the sequence
             for (const command of hackingSequences[platform]) {
@@ -397,7 +532,7 @@
             
             // Final command
             const { commandSpan: finalCommandSpan } = createCommandLine();
-            await typeText(finalCommandSpan, `hack.complete("${platform}")`);
+            await typeText(finalCommandSpan, `hack.complete("${platform}", "${targetValue}")`);
             
             // Show success message
             statusMessage.textContent = 'ACCESS GRANTED';
@@ -445,6 +580,19 @@
             startHackBtn.disabled = false;
             targetPlatform.disabled = false;
             resetHackBtn.disabled = true;
+            
+            // Enable and clear all input fields
+            Object.values(inputGroups).forEach(group => {
+                const input = group.querySelector('input');
+                if (input) {
+                    input.disabled = false;
+                    input.value = '';
+                }
+                group.classList.remove('active');
+            });
+            
+            // Hide all input groups
+            targetPlatform.value = '';
         });
 
         downloadBtn.addEventListener('click', () => {
