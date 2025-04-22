@@ -14,14 +14,14 @@
 
         body {
             background-color: #000;
-            color: #0f0;
+            color: #f00;
             height: 100vh;
             overflow: hidden;
             padding: 20px;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             height: 100%;
             display: flex;
@@ -33,7 +33,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
-            border-bottom: 1px solid #0f0;
+            border-bottom: 1px solid #f00;
             margin-bottom: 20px;
         }
 
@@ -42,8 +42,8 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #0f0;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+            color: #f00;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
         }
 
         .controls {
@@ -53,8 +53,8 @@
 
         select, button, input {
             background-color: #000;
-            color: #0f0;
-            border: 1px solid #0f0;
+            color: #f00;
+            border: 1px solid #f00;
             padding: 8px 12px;
             font-size: 14px;
             outline: none;
@@ -65,7 +65,7 @@
         }
 
         select:hover, button:hover {
-            background-color: rgba(0, 255, 0, 0.1);
+            background-color: rgba(255, 0, 0, 0.1);
         }
 
         .target-inputs {
@@ -94,10 +94,30 @@
             flex: 1;
         }
 
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+        }
+
+        .terminal-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .visualization-section {
+            flex: 1;
+            position: relative;
+            border: 1px solid #f00;
+            overflow: hidden;
+            background-color: rgba(20, 0, 0, 0.3);
+        }
+
         .terminal {
             flex: 1;
-            background-color: rgba(0, 20, 0, 0.3);
-            border: 1px solid #0f0;
+            background-color: rgba(20, 0, 0, 0.3);
+            border: 1px solid #f00;
             padding: 15px;
             overflow-y: auto;
             position: relative;
@@ -113,16 +133,16 @@
         }
 
         .prompt {
-            color: #0f0;
+            color: #f00;
             margin-right: 10px;
         }
 
         .command {
-            color: #0f0;
+            color: #f00;
         }
 
         .output {
-            color: #0f0;
+            color: #f00;
             margin-left: 20px;
             margin-bottom: 10px;
         }
@@ -132,12 +152,12 @@
             background-color: #111;
             height: 20px;
             margin: 10px 0;
-            border: 1px solid #0f0;
+            border: 1px solid #f00;
         }
 
         .progress-bar {
             height: 100%;
-            background-color: #0f0;
+            background-color: #f00;
             width: 0%;
             transition: width 0.3s;
             position: relative;
@@ -152,7 +172,7 @@
         }
 
         .status {
-            color: #0f0;
+            color: #f00;
             font-weight: bold;
             margin: 10px 0;
             text-align: center;
@@ -170,11 +190,11 @@
         }
 
         .success-message {
-            color: #0f0;
+            color: #f00;
             font-size: 36px;
             text-align: center;
             margin-top: 20px;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
             display: none;
         }
 
@@ -183,22 +203,22 @@
             margin: 20px auto;
             padding: 10px 20px;
             background-color: #000;
-            color: #0f0;
-            border: 2px solid #0f0;
+            color: #f00;
+            border: 2px solid #f00;
             font-size: 18px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .download-btn:hover {
-            background-color: #0f0;
+            background-color: #f00;
             color: #000;
         }
 
         footer {
             text-align: center;
             padding: 10px 0;
-            border-top: 1px solid #0f0;
+            border-top: 1px solid #f00;
             margin-top: 20px;
             font-size: 12px;
         }
@@ -207,9 +227,123 @@
             display: inline-block;
             width: 10px;
             height: 18px;
-            background-color: #0f0;
+            background-color: #f00;
             animation: blink 1s infinite;
             vertical-align: middle;
+        }
+
+        /* Background code animation */
+        .code-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+            overflow: hidden;
+        }
+
+        .code-line {
+            position: absolute;
+            color: #f00;
+            font-size: 14px;
+            white-space: nowrap;
+            animation: fallDown linear infinite;
+        }
+
+        @keyframes fallDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100vh); }
+        }
+
+        /* File icons */
+        .file-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 1;
+        }
+
+        .file {
+            width: 80px;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #f00;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0.2;
+            transition: opacity 0.5s;
+        }
+
+        .file.hacked {
+            opacity: 1;
+            box-shadow: 0 0 15px #f00;
+        }
+
+        .file-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .file-name {
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Password cracking animation */
+        .password-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            text-align: center;
+            z-index: 2;
+            display: none;
+        }
+
+        .password-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #f00;
+        }
+
+        .password-display {
+            font-family: monospace;
+            font-size: 24px;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            height: 30px;
+        }
+
+        .password-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .password-form input {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .password-form button {
+            padding: 10px 20px;
         }
     </style>
 </head>
@@ -270,19 +404,69 @@
             </div>
         </div>
 
-        <div class="terminal">
-            <div class="terminal-content" id="terminal-content">
-                <div class="command-line">
-                    <span class="prompt">hackPulse@system:~$</span>
-                    <span class="command">system.initialize()</span>
+        <div class="main-content">
+            <div class="terminal-section">
+                <div class="terminal">
+                    <div class="terminal-content" id="terminal-content">
+                        <div class="command-line">
+                            <span class="prompt">hackPulse@system:~$</span>
+                            <span class="command">system.initialize()</span>
+                        </div>
+                        <div class="output">System initialized. Select a target platform and press "Initialize Hack".</div>
+                    </div>
                 </div>
-                <div class="output">System initialized. Select a target platform and press "Initialize Hack".</div>
+                
+                <div class="status" id="status-message">ACCESS GRANTED</div>
+                <div class="success-message" id="success-message">Hack Complete</div>
+                <button class="download-btn" id="download-btn">Download Data</button>
+            </div>
+            
+            <div class="visualization-section">
+                <!-- Background code animation -->
+                <div class="code-background" id="code-background"></div>
+                
+                <!-- File icons -->
+                <div class="file-container" id="file-container">
+                    <div class="file" data-name="user_data.db">
+                        <div class="file-icon">📁</div>
+                        <div class="file-name">user_data.db</div>
+                    </div>
+                    <div class="file" data-name="passwords.txt">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">passwords.txt</div>
+                    </div>
+                    <div class="file" data-name="messages.enc">
+                        <div class="file-icon">💬</div>
+                        <div class="file-name">messages.enc</div>
+                    </div>
+                    <div class="file" data-name="photos.zip">
+                        <div class="file-icon">🖼️</div>
+                        <div class="file-name">photos.zip</div>
+                    </div>
+                    <div class="file" data-name="contacts.json">
+                        <div class="file-icon">👥</div>
+                        <div class="file-name">contacts.json</div>
+                    </div>
+                    <div class="file" data-name="location.dat">
+                        <div class="file-icon">📍</div>
+                        <div class="file-name">location.dat</div>
+                    </div>
+                </div>
+                
+                <!-- Password cracking animation -->
+                <div class="password-container" id="password-container">
+                    <div class="password-title">Password Cracking in Progress</div>
+                    <div class="password-display" id="password-display"></div>
+                    
+                    <div class="password-form" id="password-form">
+                        <div class="password-title">Set New Password</div>
+                        <input type="password" id="new-password" placeholder="Enter new password">
+                        <input type="password" id="confirm-password" placeholder="Confirm new password">
+                        <button id="set-password-btn">Set Password</button>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="status" id="status-message">ACCESS GRANTED</div>
-        <div class="success-message" id="success-message">Hack Complete</div>
-        <button class="download-btn" id="download-btn">Download Data</button>
 
         <footer>
             &copy; 2023 hackPulse 
@@ -299,6 +483,12 @@
         const successMessage = document.getElementById('success-message');
         const downloadBtn = document.getElementById('download-btn');
         const targetInputs = document.getElementById('target-inputs');
+        const codeBackground = document.getElementById('code-background');
+        const fileContainer = document.getElementById('file-container');
+        const passwordContainer = document.getElementById('password-container');
+        const passwordDisplay = document.getElementById('password-display');
+        const passwordForm = document.getElementById('password-form');
+        const setPasswordBtn = document.getElementById('set-password-btn');
 
         // Input fields for each platform
         const inputGroups = {
@@ -326,6 +516,7 @@
                 "Bypassing 2FA firewall...",
                 "Extracting access tokens...",
                 "Decrypting user database...",
+                "Cracking password hash...",
                 "Accessing target account...",
                 "Instagram breach: SUCCESS"
             ],
@@ -333,6 +524,7 @@
                 "Connecting to WhatsApp servers...",
                 "Bypassing end-to-end encryption...",
                 "Extracting message history...",
+                "Cracking password hash...",
                 "Cloning authentication keys...",
                 "Accessing media files...",
                 "WhatsApp server breach: SUCCESS"
@@ -341,6 +533,7 @@
                 "Connecting to Facebook Graph API...",
                 "Bypassing OAuth security...",
                 "Extracting user data...",
+                "Cracking password hash...",
                 "Accessing friend network...",
                 "Bypassing timeline restrictions...",
                 "Facebook breach: SUCCESS"
@@ -349,6 +542,7 @@
                 "Connecting to Snapchat servers...",
                 "Bypassing disappearing message protocol...",
                 "Extracting ephemeral content...",
+                "Cracking password hash...",
                 "Accessing Snap Map location data...",
                 "Injecting payload into Snapchat DB...",
                 "Snapchat breach: SUCCESS"
@@ -357,6 +551,7 @@
                 "Connecting to Twitter API...",
                 "Bypassing rate limiting...",
                 "Extracting tweet history...",
+                "Cracking password hash...",
                 "Accessing DM database...",
                 "Bypassing verification protocols...",
                 "Twitter breach: SUCCESS"
@@ -365,11 +560,136 @@
                 "Connecting to Gmail SMTP servers...",
                 "Bypassing Google security protocols...",
                 "Extracting email database...",
+                "Cracking password hash...",
                 "Accessing contact list...",
                 "Bypassing 2FA authentication...",
                 "Gmail breach: SUCCESS"
             ]
         };
+
+        // Code snippets for background animation
+        const codeSnippets = [
+            "function hackSystem() { return accessGranted; }",
+            "const bypass = new SecurityBypass(target);",
+            "await fetch('https://api.target.com/users');",
+            "for(let i=0; i<passwords.length; i++) { crack(passwords[i]); }",
+            "class Exploit { constructor() { this.payload = 'malicious'; } }",
+            "const encryption = new AES256('decrypt', key);",
+            "ssh root@target.server -p 22",
+            "sudo rm -rf /var/security/firewall",
+            "SELECT * FROM users WHERE admin = 1",
+            "const token = btoa(username + ':' + password);",
+            "document.cookie = 'session=' + stolenCookie;",
+            "const socket = new WebSocket('wss://target.com');",
+            "navigator.geolocation.getCurrentPosition(pos => { sendToServer(pos); });",
+            "const data = localStorage.getItem('credentials');",
+            "window.indexedDB.open('userDatabase', 1);",
+            "const camera = await navigator.mediaDevices.getUserMedia({ video: true });",
+            "blockchain.addTransaction(new Transaction(wallet, target, amount));",
+            "const hash = crypto.createHash('sha256').update(password).digest('hex');",
+            "const bruteforce = new BruteForce(charset, maxLength);",
+            "while(!access) { attempt++; tryPassword(generatePassword(attempt)); }"
+        ];
+
+        // Initialize background code animation
+        function initCodeBackground() {
+            // Clear existing code lines
+            codeBackground.innerHTML = '';
+            
+            // Create 50 code lines
+            for (let i = 0; i < 50; i++) {
+                const codeLine = document.createElement('div');
+                codeLine.className = 'code-line';
+                
+                // Random position and speed
+                const left = Math.random() * 100;
+                const duration = Math.random() * 10 + 5; // 5-15 seconds
+                const delay = Math.random() * 5;
+                
+                codeLine.style.left = `${left}%`;
+                codeLine.style.animationDuration = `${duration}s`;
+                codeLine.style.animationDelay = `${delay}s`;
+                
+                // Random code snippet
+                const snippetIndex = Math.floor(Math.random() * codeSnippets.length);
+                codeLine.textContent = codeSnippets[snippetIndex];
+                
+                codeBackground.appendChild(codeLine);
+            }
+        }
+
+        // Initialize file icons
+        function initFileIcons() {
+            const files = fileContainer.querySelectorAll('.file');
+            files.forEach(file => {
+                file.classList.remove('hacked');
+            });
+        }
+
+        // Hack a file
+        function hackFile(fileName) {
+            const files = fileContainer.querySelectorAll('.file');
+            files.forEach(file => {
+                if (file.dataset.name === fileName) {
+                    file.classList.add('hacked');
+                }
+            });
+        }
+
+        // Password cracking animation
+        function startPasswordCracking(callback) {
+            passwordContainer.style.display = 'block';
+            
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+            const passwordLength = 12;
+            let currentPassword = '';
+            let targetPassword = '';
+            
+            // Generate random target password
+            for (let i = 0; i < passwordLength; i++) {
+                targetPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            // Start with asterisks
+            currentPassword = '*'.repeat(passwordLength);
+            passwordDisplay.textContent = currentPassword;
+            
+            let crackedChars = 0;
+            
+            const crackInterval = setInterval(() => {
+                if (crackedChars < passwordLength) {
+                    // Replace one asterisk with the correct character
+                    let newPassword = '';
+                    for (let i = 0; i < passwordLength; i++) {
+                        if (i < crackedChars) {
+                            newPassword += targetPassword[i];
+                        } else if (i === crackedChars) {
+                            // Show random characters rapidly for the current position
+                            newPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+                        } else {
+                            newPassword += '*';
+                        }
+                    }
+                    
+                    passwordDisplay.textContent = newPassword;
+                    
+                    // Occasionally increment the cracked characters
+                    if (Math.random() > 0.7) {
+                        crackedChars++;
+                    }
+                } else {
+                    // Password fully cracked
+                    clearInterval(crackInterval);
+                    passwordDisplay.textContent = targetPassword;
+                    
+                    // Show the password form after a delay
+                    setTimeout(() => {
+                        passwordForm.style.display = 'flex';
+                        if (callback) callback();
+                    }, 1000);
+                }
+            }, 100);
+        }
 
         // Show/hide input fields based on selected platform
         targetPlatform.addEventListener('change', () => {
@@ -493,6 +813,10 @@
                 return;
             }
             
+            // Initialize background animations
+            initCodeBackground();
+            initFileIcons();
+            
             startHackBtn.disabled = true;
             targetPlatform.disabled = true;
             resetHackBtn.disabled = true;
@@ -512,6 +836,9 @@
             await typeText(targetOutput, `Target identified: ${targetValue} on ${platform.charAt(0).toUpperCase() + platform.slice(1)}`);
             
             // Process each command in the sequence
+            let fileIndex = 0;
+            const files = Array.from(fileContainer.querySelectorAll('.file')).map(file => file.dataset.name);
+            
             for (const command of hackingSequences[platform]) {
                 const output = createOutputLine();
                 await typeText(output, command, 30);
@@ -523,7 +850,18 @@
                     for (let i = 0; i <= 100; i += Math.floor(Math.random() * 10) + 1) {
                         const value = Math.min(i, 100);
                         await updateProgressBar(progressBar, progressText, value);
+                        
+                        // Hack a file when progress reaches certain thresholds
+                        if (value >= 90 && fileIndex < files.length) {
+                            hackFile(files[fileIndex]);
+                            fileIndex++;
+                        }
                     }
+                }
+                
+                // Start password cracking animation
+                if (command.includes('Cracking password hash')) {
+                    startPasswordCracking();
                 }
                 
                 // Scroll to bottom
@@ -576,6 +914,19 @@
             successMessage.style.display = 'none';
             downloadBtn.style.display = 'none';
             
+            // Reset password container
+            passwordContainer.style.display = 'none';
+            passwordDisplay.textContent = '';
+            passwordForm.style.display = 'none';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            
+            // Reset file icons
+            initFileIcons();
+            
+            // Stop code background animation
+            codeBackground.innerHTML = '';
+            
             // Enable controls
             startHackBtn.disabled = false;
             targetPlatform.disabled = false;
@@ -598,6 +949,28 @@
         downloadBtn.addEventListener('click', () => {
             alert('This is a simulation. No actual data was accessed or downloaded.');
         });
+
+        setPasswordBtn.addEventListener('click', () => {
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (!newPassword) {
+                alert('Please enter a new password');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            alert(`Password successfully changed to: ${newPassword}\n\nThis is a simulation. No actual passwords were changed.`);
+            passwordForm.style.display = 'none';
+        });
+
+        // Initialize the page
+        initCodeBackground();
+        initFileIcons();
     </script>
 </body>
 </html>
